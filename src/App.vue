@@ -10,8 +10,8 @@ interface DataPoint {
   klasse_steuerbares_einkommen_chf: string
   indikator: string
   wert: string,
-  lowerBound?: number,
-  upperBound?: number
+  lowerBound: number,
+  upperBound: number,
 }
 
 onMounted(async () => {
@@ -49,19 +49,19 @@ onMounted(async () => {
       .data(data)
       .enter()
       .append("circle")
-      .attr("cy", (d, i) => yScale(d.jahr))
-      .attr("cx", d => xScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound)))
-      .attr("r",  d => rScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound)))
+      .attr("cy", (d: any) => yScale(d.jahr))
+      .attr("cx", (d: any) => xScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound)))
+      .attr("r",  (d: any) => rScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound)))
       .attr("fill", "black")
 
-  d3.forceSimulation(data)
-      .force('x', d3.forceX(d => xScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound))).strength(0.1))
-      .force('y', d3.forceY(d => yScale(d.jahr)).strength(0.1))
-      .force('collide', d3.forceCollide(d => rScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound))))
+  d3.forceSimulation(data as any[])
+      .force('x', d3.forceX((d: any) => xScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound))).strength(0.1))
+      .force('y', d3.forceY((d: any) => yScale(d.jahr)).strength(0.1))
+      .force('collide', d3.forceCollide((d: any) => rScale(d.lowerBound + Math.random() * (d.upperBound - d.lowerBound))))
       .on('tick', () => {
         svgContainer.selectAll("circle")
-            .attr("cy", (d, i) => d.y)
-            .attr("cx", d => d.x)
+            .attr("cy", (d: any) => d.y)
+            .attr("cx", (d: any) => d.x)
       })
 
 });
